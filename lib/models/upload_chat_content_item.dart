@@ -19,5 +19,6 @@ class UploadChatContentItem extends ChatContentItem {
             createdAt: DateTime.now(),
             content: content,
             chatContentItemType: chatContentItemType,
+            isRecipient: false,
             sentBy: "");
 }

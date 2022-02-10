@@ -23,16 +23,16 @@ class ChatContentItemWidget extends StatelessWidget {
     if (chatContentItem.chatContentItemType == ChatContentItemType.TEXT) {
       return Container(
         decoration: BoxDecoration(
-          color: chatContentItem.sentBy
+          color: chatContentItem.isRecipient
               ? Theme.of(context).primaryColorLight
               : Theme.of(context).primaryColorDark,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(12),
             topRight: Radius.circular(12),
-            bottomLeft: chatContentItem.sentBy
+            bottomLeft: chatContentItem.isRecipient
                 ? Radius.circular(0)
                 : Radius.circular(12),
-            bottomRight: chatContentItem.sentBy
+            bottomRight: chatContentItem.isRecipient
                 ? Radius.circular(12)
                 : Radius.circular(0),
           ),
@@ -43,7 +43,7 @@ class ChatContentItemWidget extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Text(chatContentItem.content,
             softWrap: true,
-            style: chatContentItem.sentBy
+            style: chatContentItem.isRecipient
                 ? Theme.of(context).textTheme.bodyText1
                 : Theme.of(context).textTheme.bodyText2),
       );
@@ -70,10 +70,11 @@ class ChatContentItemWidget extends StatelessWidget {
                 top: 0,
                 left: 0,
                 child: IconButton(
-                  onPressed: () => Provider.of<ChatProvider>(
-                    context,
-                    listen: false,
-                  ).cancelMediaUpload(id: id),
+                  onPressed: () {},
+                  // onPressed: () => Provider.of<ChatProvider>(
+                  //   context,
+                  //   listen: false,
+                  // ).cancelMediaUpload(id: id),
                   icon: Icon(
                     Icons.cancel,
                   ),

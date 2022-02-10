@@ -58,6 +58,13 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Arvo
+      fonts:
+        - asset: assets/fonts/Arvo/Arvo-Bold.ttf
+        - asset: assets/fonts/Arvo/Arvo-BoldItalic.ttf
+        - asset: assets/fonts/Arvo/Arvo-Italic.ttf
+        - asset: assets/fonts/Arvo/Arvo-Regular.ttf
 
 
 

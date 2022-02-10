@@ -77,82 +77,74 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
       body: Column(
         children: [
           Expanded(
-            child: Stack(
-              children: [
-                StreamBuilder<Map<String, dynamic>>(
-                  stream: chatProvider.getCoachChatContentItemMapStream,
-                  builder: (context, coachChatContentItemMapData) {
-                    if (coachChatContentItemMapData.connectionState ==
-                        ConnectionState.waiting) {
-                      return LoadingWidget();
-                    } else {
-                      if (coachChatContentItemMapData.hasError) {
-                        return ErrorMessage();
+            child: StreamBuilder<Map<String, dynamic>>(
+              stream: chatProvider.getCoachChatContentItemMapStream,
+              builder: (context, coachChatContentItemMapData) {
+                if (coachChatContentItemMapData.connectionState ==
+                    ConnectionState.waiting) {
+                  return LoadingWidget();
+                } else {
+                  if (coachChatContentItemMapData.hasError) {
+                    return ErrorMessage();
+                  }
+                  coachChatContentItemMap = coachChatContentItemMapData.data;
+                  coachChatContentItemMapKeys = coachChatContentItemMap?.keys;
+                  itemCount = coachChatContentItemMap?.length ?? 0;
+                  return ListView.builder(
+                    reverse: true,
+                    itemCount: itemCount,
+                    itemBuilder: (context, index) {
+                      index = itemCount - index - 1;
+                      final String currentId =
+                          (coachChatContentItemMapKeys?.elementAt(index) ?? "");
+                      var currChatContentItem =
+                          coachChatContentItemMap?[currentId];
+                      bool showChatContentItemDate;
+                      bool showChatContentItemName;
+                      if (index == 0) {
+                        showChatContentItemDate = true;
+                        showChatContentItemName = true;
+                      } else {
+                        var prevChatContentItem = coachChatContentItemMap?[
+                            coachChatContentItemMapKeys?.elementAt(index - 1)];
+                        final DateTime currCreatedAtDDMMYY =
+                            DateTimeHelper.formatDateTimeToYearMonthDay(
+                                currChatContentItem.createdAt);
+                        final DateTime prevCreatedAtDDMMYY =
+                            DateTimeHelper.formatDateTimeToYearMonthDay(
+                                prevChatContentItem.createdAt);
+                        showChatContentItemDate = _showChatContentItemDate(
+                          currCreatedAtDDMMYY: currCreatedAtDDMMYY,
+                          prevCreatedAtDDMMYY: prevCreatedAtDDMMYY,
+                        );
+                        showChatContentItemName = _showChatContentItemName(
+                          currIsRecipient: currChatContentItem.isRecipient,
+                          prevIsRecipient: prevChatContentItem.isRecipient,
+                          currCreatedAtDDMMYY: currCreatedAtDDMMYY,
+                          prevCreatedAtDDMMYY: prevCreatedAtDDMMYY,
+                        );
                       }
-                      coachChatContentItemMap =
-                          coachChatContentItemMapData.data;
-                      coachChatContentItemMapKeys =
-                          coachChatContentItemMap?.keys;
-                      itemCount = coachChatContentItemMap?.length ?? 0;
-                      return ListView.builder(
-                        reverse: true,
-                        itemCount: itemCount,
-                        itemBuilder: (context, index) {
-                          index = itemCount - index - 1;
-                          final String currentId =
-                              (coachChatContentItemMapKeys?.elementAt(index) ??
-                                  "");
-                          var currChatContentItem =
-                              coachChatContentItemMap?[currentId];
-                          bool showChatContentItemDate;
-                          bool showChatContentItemName;
-                          if (index == 0) {
-                            showChatContentItemDate = true;
-                            showChatContentItemName = true;
-                          } else {
-                            var prevChatContentItem = coachChatContentItemMap?[
-                                coachChatContentItemMapKeys
-                                    ?.elementAt(index - 1)];
-                            final DateTime currCreatedAtDDMMYY =
-                                DateTimeHelper.formatDateTimeToYearMonthDay(
-                                    currChatContentItem.createdAt);
-                            final DateTime prevCreatedAtDDMMYY =
-                                DateTimeHelper.formatDateTimeToYearMonthDay(
-                                    prevChatContentItem.createdAt);
-                            showChatContentItemDate = _showChatContentItemDate(
-                              currCreatedAtDDMMYY: currCreatedAtDDMMYY,
-                              prevCreatedAtDDMMYY: prevCreatedAtDDMMYY,
-                            );
-                            showChatContentItemName = _showChatContentItemName(
-                              currIsRecipient: currChatContentItem.sentBy,
-                              prevIsRecipient: prevChatContentItem.sentBy,
-                              currCreatedAtDDMMYY: currCreatedAtDDMMYY,
-                              prevCreatedAtDDMMYY: prevCreatedAtDDMMYY,
-                            );
-                          }
-                          final ChatContentItemHolder chatContentItemHolder =
-                              ChatContentItemHolder(
-                            id: currentId,
-                            chatContentItem: currChatContentItem,
-                            showName: showChatContentItemName,
-                          );
-                          if (showChatContentItemDate)
-                            return Column(
-                              children: [
-                                ChatContentItemDateHeading(
-                                  createdAt: currChatContentItem.createdAt,
-                                ),
-                                chatContentItemHolder,
-                              ],
-                            );
-                          else
-                            return chatContentItemHolder;
-                        },
+                      final ChatContentItemHolder chatContentItemHolder =
+                          ChatContentItemHolder(
+                        id: currentId,
+                        chatContentItem: currChatContentItem,
+                        showName: showChatContentItemName,
                       );
-                    }
-                  },
-                ),
-              ],
+                      if (showChatContentItemDate)
+                        return Column(
+                          children: [
+                            ChatContentItemDateHeading(
+                              createdAt: currChatContentItem.createdAt,
+                            ),
+                            chatContentItemHolder,
+                          ],
+                        );
+                      else
+                        return chatContentItemHolder;
+                    },
+                  );
+                }
+              },
             ),
           ),
           SendMessageWidget(),

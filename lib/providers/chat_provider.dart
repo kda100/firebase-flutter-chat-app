@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_chat_app/constants/firebase_field_names.dart';
 import 'package:firebase_chat_app/helpers/chats_media_storage_bucket_helper.dart';
 import 'package:firebase_chat_app/models/chat_content_item_type.dart';
@@ -13,11 +12,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatProvider with ChangeNotifier {
   final CollectionReference _chatContentItemCollection =
-      FirebaseFirestore.instance.collection("Your Collection Path");
+      FirebaseFirestore.instance.collection("Your Collection");
   final Reference _chatsImageStorageRef =
-      FirebaseStorage.instance.ref("Your Reference Path");
+      FirebaseStorage.instance.ref("Your Storage Reference");
   final Reference _chatsVideoStorageRef =
-      FirebaseStorage.instance.ref("Your Reference Path");
+      FirebaseStorage.instance.ref("Your Storage Reference");
   final String _myName = "My Name";
   Map<String, dynamic> _mainChatContentItemMap = {};
   Map<String, dynamic> _uploadChatContentItemMap = {};
@@ -27,7 +26,6 @@ class ChatProvider with ChangeNotifier {
       StreamController<Map<String, dynamic>>();
   StreamSubscription<QuerySnapshot>?
       _coachChatsChatContentCollectionStreamSubscription;
-  bool _hasListenedStreamOnce = false;
 
   @override
   void dispose() {
@@ -117,6 +115,7 @@ class ChatProvider with ChangeNotifier {
                   CloudChatContentItem chatContentItem = CloudChatContentItem(
                     read: isRecipient ? null : read,
                     onCloud: isRecipient ? null : onCloud,
+                    isRecipient: isRecipient,
                     content: coachChatContentData[FieldNames.contentField],
                     sentBy: sentBy,
                     chatContentItemType: ChatContentItemTypeConverter.decode(
@@ -149,11 +148,6 @@ class ChatProvider with ChangeNotifier {
             }
           },
         );
-        if (!_hasListenedStreamOnce) {
-          _updateStream = true;
-          _mainChatContentItemMap.addAll(_uploadChatContentItemMap);
-          _hasListenedStreamOnce = true;
-        }
         if (_updateStream)
           _chatContentItemsMapStreamController.sink
               .add(_mainChatContentItemMap);
@@ -163,6 +157,7 @@ class ChatProvider with ChangeNotifier {
       },
       cancelOnError: false,
     );
+    _chatContentItemsMapStreamController.sink.add(_mainChatContentItemMap);
   }
 
   bool _isAfterFirstChatContentItem({required DateTime createdAt}) {

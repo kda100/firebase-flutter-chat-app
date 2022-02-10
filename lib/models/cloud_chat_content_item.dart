@@ -1,4 +1,5 @@
 import 'chat_content_item.dart';
+import 'chat_content_item_type.dart';
 
 class CloudChatContentItem extends ChatContentItem {
   bool? read;
@@ -7,12 +8,14 @@ class CloudChatContentItem extends ChatContentItem {
   CloudChatContentItem({
     required this.onCloud,
     required this.read,
-    required chatContentItemType,
+    required ChatContentItemType chatContentItemType,
+    required bool isRecipient,
     required content,
-    required createdAt,
-    required sentBy,
+    required DateTime createdAt,
+    required String sentBy,
   }) : super(
           createdAt: createdAt,
+          isRecipient: isRecipient,
           chatContentItemType: chatContentItemType,
           content: content,
           sentBy: sentBy,

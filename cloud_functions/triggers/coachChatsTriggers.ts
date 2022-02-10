@@ -3,8 +3,6 @@ import * as admin from "firebase-admin";
 import * as fieldNames from "../constants/fieldNames";
 import * as strings from "../constants/strings";
 
-const chatTextContentType = "text";
-
 const chatContentsDocRefString = "Your Collection Reference";
 
 exports.onCreateChatContentItem = functions.firestore.document(chatContentsDocRefString).onCreate(async (snap, context) => {

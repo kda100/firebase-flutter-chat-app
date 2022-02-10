@@ -1,8 +1,12 @@
 import 'package:firebase_chat_app/helpers/datetime_helper.dart';
+import 'package:firebase_chat_app/models/chat_content_item_type.dart';
 import 'package:firebase_chat_app/models/cloud_chat_content_item.dart';
 import 'package:firebase_chat_app/models/upload_chat_content_item.dart';
+import 'package:firebase_chat_app/providers/chat_provider.dart';
+import 'package:firebase_chat_app/screens/chat_media_preview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'chat_content_item_widget.dart';
 
 class ChatContentItemHolder extends StatelessWidget {
@@ -21,7 +25,7 @@ class ChatContentItemHolder extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, right: 8.0, left: 8.0),
       child: Column(
-        crossAxisAlignment: chatContentItem.sentBy
+        crossAxisAlignment: chatContentItem.isRecipient
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.end,
         children: [
@@ -35,13 +39,44 @@ class ChatContentItemHolder extends StatelessWidget {
                     ),
               ),
             ),
-          ChatContentItemWidget(
-            key: key,
-            id: id,
-            chatContentItem: chatContentItem,
+          GestureDetector(
+            onTap: (chatContentItem.chatContentItemType ==
+                        ChatContentItemType.TEXT ||
+                    (chatContentItem.runtimeType == UploadChatContentItem &&
+                        chatContentItem.isSending))
+                ? null
+                : () async {
+                    Provider.of<ChatProvider>(
+                      context,
+                      listen: false,
+                    ).updateReadReceipts();
+                    var mediaPath;
+                    if (chatContentItem.chatContentItemType ==
+                        ChatContentItemType.IMAGE)
+                      mediaPath = chatContentItem.content;
+                    else if (chatContentItem.chatContentItemType ==
+                        ChatContentItemType.VIDEO)
+                      mediaPath = chatContentItem.content[0];
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ChatMediaPreviewScreen(
+                          chatContentItemType:
+                              chatContentItem.chatContentItemType,
+                          mediaPath: mediaPath,
+                          isStorage: chatContentItem.runtimeType ==
+                              CloudChatContentItem,
+                        ),
+                      ),
+                    );
+                  },
+            child: ChatContentItemWidget(
+              key: key,
+              id: id,
+              chatContentItem: chatContentItem,
+            ),
           ),
           Row(
-            mainAxisAlignment: chatContentItem.sentBy
+            mainAxisAlignment: chatContentItem.isRecipient
                 ? MainAxisAlignment.start
                 : MainAxisAlignment.end,
             children: [
@@ -61,7 +96,7 @@ class ChatContentItemHolder extends StatelessWidget {
                 width: 2,
               ),
               if (chatContentItem.runtimeType == CloudChatContentItem &&
-                  !chatContentItem.sentBy &&
+                  !chatContentItem.isRecipient &&
                   chatContentItem.onCloud != null)
                 Icon(
                   chatContentItem.onCloud
