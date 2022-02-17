@@ -40,9 +40,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
         .updateReadReceipts(); //updates read receipts when app changes state.
   }
 
-  ///determines whether to display a date heading above a group of chat content items,
-  ///if series of chat content items were sent on the same day then date will only be shown for
-  ///the first chat content item.
+  ///determines whether to display a date heading above a series of chat content item widgets,
+  ///if series of chat content item widgets were sent on the same day then date will only be shown for
+  ///the first chat content item widget.
   bool _showChatContentItemDate({
     required DateTime currCreatedAtDDMMYY,
     required DateTime prevCreatedAtDDMMYY,
@@ -53,8 +53,8 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
     return false;
   }
 
-  ///determines whether to display a date heading above a group of chat content items,
-  ///if series of chat content items were sent by the same user then name will only be shown for
+  ///determines whether to display a date heading above a group of chat content item widgets,
+  ///if series of chat content item widgets were sent by the same user then name will only be shown for
   ///the first chat content item.
   bool _showChatContentItemName({
     required bool currIsRecipient,
