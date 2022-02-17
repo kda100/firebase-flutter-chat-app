@@ -16,11 +16,11 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(
-    MyPtApp(),
+    FirebaseFlutterChatApp(),
   );
 }
 
-class MyPtApp extends StatelessWidget {
+class FirebaseFlutterChatApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismissOnTap(
