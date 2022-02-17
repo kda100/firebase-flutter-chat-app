@@ -1,0 +1,46 @@
+name: firebase_chat_app
+description: Chat app for firebase.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  provider: ^5.0.0
+  firebase_core: ^1.0.1
+  cloud_firestore: ^1.0.1
+  firebase_storage: ^8.0.0
+  file_picker: ^3.0.0
+  video_player: ^2.1.1
+  video_thumbnail: ^0.4.3
+  permission_handler: ^8.0.1
+  flutter_keyboard_visibility: ^5.0.2
+  cached_network_image: ^3.1.0+1
+  font_awesome_flutter: ^9.2.0
+  cupertino_icons: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Arvo
+      fonts:
+        - asset: assets/fonts/Arvo/Arvo-Bold.ttf
+        - asset: assets/fonts/Arvo/Arvo-BoldItalic.ttf
+        - asset: assets/fonts/Arvo/Arvo-Italic.ttf
+        - asset: assets/fonts/Arvo/Arvo-Regular.ttf
+
+
+
