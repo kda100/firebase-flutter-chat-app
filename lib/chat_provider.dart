@@ -21,11 +21,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatProvider with ChangeNotifier {
   final CollectionReference _chatContentItemCollection = FirebaseFirestore
       .instance
-      .collection("chatContentItems"); //col ref for all messages
+      .collection("Your Chat Content Items Collection References"); //col ref for all messages
   final Reference _chatsImageStorageRef = FirebaseStorage.instance
-      .ref("chatsMedia/images"); //storage ref for images
+      .ref("Your Images Storage Reference"); //storage ref for images
   final Reference _chatsVideoStorageRef = FirebaseStorage.instance
-      .ref("chatsMedia/videos"); //storage ref for videos.
+      .ref("Your Videos Storage Reference"); //storage ref for videos.
   final String _myName = "John Doe"; //name of this user
 
   Map<String, dynamic> _chatContentItemMap =
