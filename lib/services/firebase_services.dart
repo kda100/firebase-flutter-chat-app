@@ -11,12 +11,12 @@ import '../models/chat_video_item_folder.dart';
 class FirebaseServices {
   final CollectionReference _chatContentItemCollection =
       FirebaseFirestore.instance.collection(
-          "chatContentItems"); //Firebase Firestore col ref for all messages
+          "Your Chat Content Item Collection"); //Firebase Firestore col ref for all messages
 
   ///function to get chat app (me) data from firestore.
   Future<User?> fetchMyData() async {
     final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.doc("users/1234").get();
+        await FirebaseFirestore.instance.doc("My Doc").get();
     if (userDoc.exists) {
       return User(id: userDoc.id, name: userDoc[FieldNames.nameField]);
     }
@@ -26,7 +26,7 @@ class FirebaseServices {
   ///function to get user (recipient) data from firestore.
   Future<User?> fetchRecipientData() async {
     final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.doc("users/4321").get();
+        await FirebaseFirestore.instance.doc("Recipient Doc").get();
     if (userDoc.exists) {
       return User(id: userDoc.id, name: userDoc[FieldNames.nameField]);
     }
