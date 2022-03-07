@@ -36,7 +36,11 @@ class ChatMediaPreviewScreen extends StatelessWidget {
         title: Text(Strings.appName),
       ),
       backgroundColor: ColorPalette.secondaryBackgroundColor,
-      body: _buildMediaPreviewWidget(),
+      body: Center(
+        child: SingleChildScrollView(
+          child: _buildMediaPreviewWidget(),
+        ),
+      ),
     );
   }
 }
