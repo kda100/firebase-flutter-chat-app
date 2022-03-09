@@ -11,7 +11,7 @@ import '../models/chat_video_item_folder.dart';
 class FirebaseServices {
   final CollectionReference _chatItemsCollection = FirebaseFirestore.instance
       .collection(
-          "Your chat items col ref"); //Firebase Firestore col ref for all messages
+          "Chat items collections ref"); //Firebase Firestore col ref for all messages
 
   ///function to get chat app (me) data from firestore.
   Future<User?> fetchMyData() async {
