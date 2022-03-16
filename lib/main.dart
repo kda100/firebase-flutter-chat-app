@@ -38,9 +38,6 @@ class FirebaseFlutterChatApp extends StatelessWidget {
             primaryColorDark: ColorPalette.darkPrimaryColor,
             primaryColorLight: ColorPalette.lightPrimaryColor,
             textTheme: TextTheme(
-              headline1: TextStyle(
-                  color: ColorPalette.primaryTextColor,
-                  fontWeight: FontWeight.bold),
               bodyText1: TextStyle(
                 color: ColorPalette.primaryTextColor,
               ),
