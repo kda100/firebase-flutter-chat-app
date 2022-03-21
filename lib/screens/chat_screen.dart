@@ -24,7 +24,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   void initState() {
     chatProvider = Provider.of<ChatProvider>(context, listen: false);
     setUpChatData = chatProvider.setUpChatData();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
@@ -92,7 +92,9 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                             );
                           }
                           return ListView.builder(
+                            padding: EdgeInsets.zero,
                             //produces list of chat content item views with the most recent messages at the bottom of list.
+                            shrinkWrap: true,
                             reverse: true,
                             itemCount: chatProvider.chatItemsCount,
                             itemBuilder: (context, index) {
@@ -105,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
                         },
                       ),
                     ),
-                    SendMessageWidget(),
+                    SendMessageWidget()
                   ],
                 );
               }
