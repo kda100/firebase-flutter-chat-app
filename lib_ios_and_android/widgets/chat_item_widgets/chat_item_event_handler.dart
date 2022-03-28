@@ -31,7 +31,7 @@ class ChatItemEventHandler extends PlatformStatelessWidget<Widget, Widget> {
                   .updateReadReceipts(); //updates read receipts of all messages not read
               showDialog(
                 context: context,
-                builder: (context) => ChatItemDialog(
+                builder: (_) => ChatItemDialog(
                   onUnsend: () {
                     _onUnsend(
                       context,
