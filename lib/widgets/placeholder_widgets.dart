@@ -16,10 +16,12 @@ class placeHolderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraint) {
-        return Icon(
-          placeholder,
-          size: constraint.biggest.width,
-          color: Theme.of(context).primaryColorDark,
+        return FittedBox(
+          child: Icon(
+            placeholder,
+            size: constraint.maxWidth,
+            color: ColorPalette.darkPrimaryColor,
+          ),
         );
       },
     );
