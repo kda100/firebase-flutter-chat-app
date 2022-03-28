@@ -92,6 +92,7 @@ class _ChatScreenState
                       return ListView.builder(
                         //produces list of chat content item views with the most recent messages at the bottom of list.
                         padding: EdgeInsets.zero,
+                        physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
                         reverse: true,
                         itemCount: chatProvider.chatItemsCount,
