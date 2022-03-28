@@ -49,15 +49,18 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
               Positioned(
                 top: 0,
                 left: 0,
-                child: PlatformIconButton(
-                  //button to cancel upload.
-                  onPressed: () => Provider.of<ChatProvider>(
-                    context,
-                    listen: false,
-                  ).cancelMediaUpload(id: uploadChatItemView.id),
-                  icon: Icon(
-                    Icons.cancel,
-                    color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PlatformIconButton(
+                    //button to cancel upload.
+                    onPressed: () => Provider.of<ChatProvider>(
+                      context,
+                      listen: false,
+                    ).cancelMediaUpload(id: uploadChatItemView.id),
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
               ),
