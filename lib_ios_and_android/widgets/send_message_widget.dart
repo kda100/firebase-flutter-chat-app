@@ -184,7 +184,9 @@ class _SendMessageWidgetState
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 4.0),
+                    padding: const EdgeInsets.symmetric(
+              horizontal: 4.0,
+            ),
                     child: _buildAttachmentIconButton(),
                   ),
                 ],
