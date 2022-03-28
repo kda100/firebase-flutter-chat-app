@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'constants/color_palette.dart';
 import 'constants/strings.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_chat_app/constants/text_styles.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
