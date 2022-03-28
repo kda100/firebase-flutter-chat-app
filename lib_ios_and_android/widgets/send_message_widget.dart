@@ -52,7 +52,7 @@ class _SendMessageWidgetState
       },
       icon: Icon(
         Platform.isIOS ? CupertinoIcons.arrow_up_circle_fill : Icons.send,
-        size: 35,
+        size: Platform.isIOS ? 35 : null,
       ),
     );
   }
