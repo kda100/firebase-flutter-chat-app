@@ -38,10 +38,10 @@ class _SendMessageWidgetState
   Widget _buildSendIconButton() {
     return PlatformIconButton(
       onPressed: () {
+        chatProvider.updateReadReceipts();
         if (messageContent.trim().isNotEmpty) {
           //only used for sending text messages.
           FocusScope.of(context).unfocus();
-          chatProvider.updateReadReceipts();
           chatProvider.sendMessage(
             message: messageContent.trim(),
           );
@@ -185,8 +185,8 @@ class _SendMessageWidgetState
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-              horizontal: 4.0,
-            ),
+                      horizontal: 4.0,
+                    ),
                     child: _buildAttachmentIconButton(),
                   ),
                 ],
@@ -199,3 +199,4 @@ class _SendMessageWidgetState
     );
   }
 }
+
