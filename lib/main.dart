@@ -1,4 +1,9 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
+
+import 'constants/fonts.dart';
+import 'constants/text_styles.dart';
 import 'providers/chat_provider.dart';
 import 'package:firebase_chat_app/screens/chat_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,56 +26,94 @@ Future<void> main() async {
 }
 
 class FirebaseFlutterChatApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return KeyboardDismissOnTap(
-      //Keyboard dismisses on tap anywhere in app.
-      child: MaterialApp(
-        title: Strings.appName,
-        theme: ThemeData(
-            fontFamily: "Arvo",
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: ColorPalette.primaryColor,
-                  secondary: ColorPalette.accentColor,
-                  background: ColorPalette.primaryBackgroundColor,
-                ),
-            primaryColor: ColorPalette.primaryColor,
-            primaryColorDark: ColorPalette.darkPrimaryColor,
-            primaryColorLight: ColorPalette.lightPrimaryColor,
-            textTheme: TextTheme(
-              bodyText1: TextStyle(
-                color: ColorPalette.primaryTextColor,
-              ),
-              bodyText2: TextStyle(
-                color: ColorPalette.secondaryTextColor,
-              ),
+  MaterialApp buildMaterialApp({
+    required BuildContext context,
+    required Widget home,
+  }) {
+    return MaterialApp(
+      title: Strings.appName,
+      theme: ThemeData(
+        fontFamily: Fonts.fontFamily,
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: ColorPalette.primaryColor,
+              secondary: ColorPalette.accentColor,
+              background: ColorPalette.primaryBackgroundColor,
             ),
-            dialogTheme: DialogTheme(
-              backgroundColor: ColorPalette.primaryBackgroundColor,
-            ),
-            backgroundColor: ColorPalette.primaryBackgroundColor,
-            cardTheme: CardTheme(
-              color: ColorPalette.primaryBackgroundColor,
-              elevation: 10,
-            ),
-            progressIndicatorTheme: ProgressIndicatorThemeData(
-              color: ColorPalette.primaryColor,
-            ),
-            bottomSheetTheme: BottomSheetThemeData(
-              backgroundColor: ColorPalette.primaryBackgroundColor,
-            ),
-            appBarTheme: AppBarTheme(color: ColorPalette.darkPrimaryColor),
-            iconTheme: IconThemeData(color: ColorPalette.primaryIconColor),
-            scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor),
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        supportedLocales: [
-          const Locale('en'),
-        ],
-        home: ChangeNotifierProvider<ChatProvider>(
-          create: (context) => ChatProvider(),
-          child: ChatScreen(), //displays chat screen.
+        primaryColor: ColorPalette.primaryColor,
+        primaryColorDark: ColorPalette.darkPrimaryColor,
+        primaryColorLight: ColorPalette.lightPrimaryColor,
+        dialogTheme: DialogTheme(
+          backgroundColor: ColorPalette.primaryBackgroundColor,
+        ),
+        backgroundColor: ColorPalette.primaryBackgroundColor,
+        cardTheme: CardTheme(
+          color: ColorPalette.primaryBackgroundColor,
+          elevation: 10,
+        ),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: ColorPalette.primaryColor,
+        ),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: ColorPalette.primaryBackgroundColor,
+        ),
+        appBarTheme: AppBarTheme(
+          color: ColorPalette.darkPrimaryColor,
+          titleTextStyle: TextStyles.secondaryHeaderTextStyle,
+        ),
+        iconTheme: IconThemeData(
+          color: ColorPalette.primaryIconColor,
+        ),
+        scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor,
+      ),
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: [
+        const Locale('en'),
+      ],
+      home: home,
+    );
+  }
+
+  CupertinoApp buildCupertinoApp({
+    required Widget home,
+  }) {
+    return CupertinoApp(
+      home: home,
+      theme: CupertinoThemeData(
+        primaryColor: ColorPalette.primaryColor,
+        barBackgroundColor: ColorPalette.darkPrimaryColor,
+        scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor,
+        textTheme: CupertinoTextThemeData(
+          primaryColor: ColorPalette.primaryTextColor,
+          navActionTextStyle: TextStyles.primaryHeaderTextStyle,
+          navTitleTextStyle: TextStyles.secondaryHeaderTextStyle.copyWith(
+            fontWeight: FontWeight.normal,
+          ),
+          textStyle: TextStyles.primaryTextStyle.copyWith(fontSize: 14),
+          actionTextStyle: TextStyles.secondaryTextStyle,
         ),
       ),
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: [
+        const Locale('en'),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final home = ChangeNotifierProvider<ChatProvider>(
+      create: (context) => ChatProvider(),
+      child: ChatScreen(), //displays chat screen.
+    );
+
+    return KeyboardDismissOnTap(
+      //Keyboard dismisses on tap anywhere in app.
+      child: Platform.isIOS
+          ? buildCupertinoApp(home: home)
+          : buildMaterialApp(
+              home: home,
+              context: context,
+            ),
     );
   }
 }

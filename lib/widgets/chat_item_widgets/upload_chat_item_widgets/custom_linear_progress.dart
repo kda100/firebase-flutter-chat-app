@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:firebase_chat_app/constants/sizes.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 ///custom linear progress indicator for animating the upload progress of UploadChatContentItems;
 class CustomLinearProgress extends StatefulWidget {
@@ -37,7 +39,9 @@ class _CustomLinearProgressState extends State<CustomLinearProgress> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      color: Theme.of(context).colorScheme.primary,
+      color: Platform.isIOS
+          ? CupertinoTheme.of(context).primaryColor
+          : Theme.of(context).colorScheme.primary,
       duration: Duration(milliseconds: 100),
       height: 4,
       width: progress * kMaxChatContentItemWidth,

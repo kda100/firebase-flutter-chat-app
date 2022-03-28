@@ -1,7 +1,9 @@
+import 'package:firebase_chat_app/constants/text_styles.dart';
 import 'package:firebase_chat_app/models/chat_item_view_models/chat_item_view.dart';
 import 'package:firebase_chat_app/models/chat_item_view_models/cloud_chat_item_view.dart';
 import 'package:firebase_chat_app/models/chat_item_view_models/upload_chat_item_view.dart';
 import 'package:firebase_chat_app/widgets/chat_item_widgets/upload_chat_item_widgets/upload_chat_image_and_video_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/chat_provider.dart';
@@ -48,9 +50,7 @@ class ChatItemHolder extends StatelessWidget {
                 chatItemView.isRecipient
                     ? chatProvider.recipientName
                     : chatProvider.myName,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 10,
-                    ),
+                style: TextStyles.primaryTextStyle,
               ),
             ),
           _buildChatItemWidget(),

@@ -1,6 +1,10 @@
+import 'package:firebase_chat_app/constants/color_palette.dart';
 import 'package:firebase_chat_app/widgets/placeholder_widgets.dart';
+import 'package:firebase_chat_app/widgets/platform_icon_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'dart:io';
 
 ///widget for previewing and watching video messages from device or stored on the cloud
 
@@ -71,6 +75,33 @@ class _VideoPreviewWidgetState extends State<VideoPreviewWidget> {
     super.dispose();
   }
 
+  Widget _buildSlider() {
+    void onChanged(double value) {
+      _videoPlayerController.seekTo(
+        Duration(
+          milliseconds: value.toInt(),
+        ),
+      );
+    }
+
+    if (Platform.isIOS) {
+      return CupertinoSlider(
+        //controls position of video
+        value: doubleCurrentDuration,
+        max: doubleVideoDuration,
+        onChanged: onChanged,
+        thumbColor: ColorPalette.primaryColor,
+      );
+    } else {
+      return Slider(
+        //controls position of video
+        value: doubleCurrentDuration,
+        max: doubleVideoDuration,
+        onChanged: onChanged,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_videoPlayerController.value.isInitialized) {
@@ -90,22 +121,10 @@ class _VideoPreviewWidgetState extends State<VideoPreviewWidget> {
                     )
                   : Center(
                       //while video player is loading.
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator.adaptive(),
                     ),
             ),
-            if (_videoPlayerController.value.isInitialized)
-              Slider(
-                //controls position of video
-                value: doubleCurrentDuration,
-                max: doubleVideoDuration,
-                onChanged: (value) {
-                  _videoPlayerController.seekTo(
-                    Duration(
-                      milliseconds: value.toInt(),
-                    ),
-                  );
-                },
-              ),
+            if (_videoPlayerController.value.isInitialized) _buildSlider(),
             if (_videoPlayerController.value.isInitialized)
               Container(
                 margin: EdgeInsets.only(right: 8),
@@ -119,23 +138,29 @@ class _VideoPreviewWidgetState extends State<VideoPreviewWidget> {
               ),
             if (_videoPlayerController.value.isInitialized)
               Padding(
-                  padding: EdgeInsets.only(bottom: 24.0),
-                  child: IconButton(
-                      color: Colors.white,
-                      icon: Icon(_videoPlayerController.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow),
-                      onPressed: () {
-                        setState(() {
-                          if (doubleCurrentDuration == doubleVideoDuration) {
-                            //resets video if video has ended.
-                            _videoPlayerController.initialize();
-                          }
-                          _videoPlayerController.value.isPlaying
-                              ? _videoPlayerController.pause()
-                              : _videoPlayerController.play();
-                        });
-                      }))
+                padding: EdgeInsets.only(bottom: 24.0),
+                child: PlatformIconButton(
+                  icon: Icon(
+                    _videoPlayerController.value.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(
+                      () {
+                        if (doubleCurrentDuration == doubleVideoDuration) {
+                          //resets video if video has ended.
+                          _videoPlayerController.initialize();
+                        }
+                        _videoPlayerController.value.isPlaying
+                            ? _videoPlayerController.pause()
+                            : _videoPlayerController.play();
+                      },
+                    );
+                  },
+                ),
+              )
           ],
         ),
       );
@@ -145,7 +170,7 @@ class _VideoPreviewWidgetState extends State<VideoPreviewWidget> {
       );
     } else {
       return Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator.adaptive(),
       );
     }
   }

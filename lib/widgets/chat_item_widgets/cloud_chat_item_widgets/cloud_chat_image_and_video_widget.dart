@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_chat_app/constants/color_palette.dart';
 import 'package:firebase_chat_app/constants/sizes.dart';
 import 'package:firebase_chat_app/models/chat_item_type.dart';
 import 'package:firebase_chat_app/models/chat_item_view_models/cloud_chat_item_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../placeholder_widgets.dart';
 import '../chat_item_event_handler.dart';
@@ -47,7 +50,9 @@ class CloudChatImageAndVideoWidget extends StatelessWidget {
                   Icon(
                     Icons.play_arrow,
                     size: 100,
-                    color: Theme.of(context).primaryColor,
+                    color: Platform.isIOS
+                        ? CupertinoTheme.of(context).primaryColor
+                        : Theme.of(context).primaryColor,
                   ),
                 ],
               );

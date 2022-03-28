@@ -1,3 +1,5 @@
+import 'package:firebase_chat_app/constants/color_palette.dart';
+import 'package:firebase_chat_app/constants/text_styles.dart';
 import 'package:firebase_chat_app/models/chat_item_view_models/cloud_chat_item_view.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +19,8 @@ class CloudChatTextWidget extends StatelessWidget {
     final Widget chatTextItemWidget = Container(
       decoration: BoxDecoration(
         color: cloudChatItemView.isRecipient //different colours.
-            ? Theme.of(context).primaryColorLight
-            : Theme.of(context).primaryColorDark,
+            ? ColorPalette.lightPrimaryColor
+            : ColorPalette.darkPrimaryColor,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(12),
           topRight: Radius.circular(12),
@@ -34,11 +36,13 @@ class CloudChatTextWidget extends StatelessWidget {
         maxWidth: 200,
       ),
       padding: EdgeInsets.all(10),
-      child: Text(cloudChatItemView.content,
-          softWrap: true,
-          style: cloudChatItemView.isRecipient
-              ? Theme.of(context).textTheme.bodyText1 //different text themes
-              : Theme.of(context).textTheme.bodyText2),
+      child: Text(
+        cloudChatItemView.content,
+        softWrap: true,
+        style: cloudChatItemView.isRecipient
+            ? TextStyles.recipientTextStyle //different text themes
+            : TextStyles.senderTextStyle,
+      ),
     );
     if (!cloudChatItemView.isRecipient) {
       //user has ability to unsend messages they have sent.

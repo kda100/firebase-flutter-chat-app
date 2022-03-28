@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_chat_app/constants/text_styles.dart';
 import 'package:firebase_chat_app/helpers/datetime_helper.dart';
 import 'package:firebase_chat_app/models/chat_item_type.dart';
 import 'package:firebase_chat_app/models/chat_item_view_models/cloud_chat_item_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'cloud_chat_image_and_video_widget.dart';
@@ -46,9 +50,7 @@ class CloudChatItemWidget extends StatelessWidget {
               Text(
                 DateTimeHelper.formatDateTimeToTimeString(
                     cloudChatItemView.createdAt),
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: 11,
-                    ),
+                style: TextStyles.primaryTextStyle,
               ),
             SizedBox(
               width: 2,

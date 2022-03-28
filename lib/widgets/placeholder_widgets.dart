@@ -1,5 +1,6 @@
+import 'package:firebase_chat_app/constants/color_palette.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 ///placeholder widgets to use when media files have not loaded successfully,
 ///when the file is awaiting to be loaded.

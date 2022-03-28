@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_chat_app/constants/fonts.dart';
+import 'package:firebase_chat_app/constants/text_styles.dart';
 import 'package:firebase_chat_app/helpers/datetime_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ///widget to display date of a single chat content item (message) or a group.
@@ -20,9 +25,7 @@ class ChatItemDateHeading extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         DateTimeHelper.formatDateTimeToDayMonthYearString(createdAt),
-        style: Theme.of(context).textTheme.bodyText1?.copyWith(
-              fontSize: 11,
-            ),
+        style: TextStyles.primaryTextStyle,
       ),
     );
   }

@@ -13,6 +13,7 @@ class FileServices {
   Future<String?> getFilePath({required FileType fileType}) async {
     FilePickerResult? filePickerResult =
         await FilePicker.platform.pickFiles(type: fileType);
+    print(filePickerResult?.paths);
     return filePickerResult?.files.single.path;
   }
 

@@ -3,6 +3,8 @@ import 'package:firebase_chat_app/constants/sizes.dart';
 import 'package:firebase_chat_app/constants/color_palette.dart';
 import 'package:firebase_chat_app/models/chat_item_type.dart';
 import 'package:firebase_chat_app/models/chat_item_view_models/upload_chat_item_view.dart';
+import 'package:firebase_chat_app/widgets/platform_icon_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,16 +49,19 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
               Positioned(
                 top: 0,
                 left: 0,
-                child: IconButton(
-                  //button to cancel upload.
-                  onPressed: () => Provider.of<ChatProvider>(
-                    context,
-                    listen: false,
-                  ).cancelMediaUpload(id: uploadChatItemView.id),
-                  icon: Icon(
-                    Icons.cancel,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PlatformIconButton(
+                    //button to cancel upload.
+                    onPressed: () => Provider.of<ChatProvider>(
+                      context,
+                      listen: false,
+                    ).cancelMediaUpload(id: uploadChatItemView.id),
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.red,
+                    ),
                   ),
-                  color: Colors.red,
                 ),
               ),
             if (uploadChatItemView.chatItemType == ChatItemType.VIDEO)
@@ -64,7 +69,9 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
                 child: Icon(
                   Icons.play_arrow,
                   size: 100,
-                  color: Theme.of(context).primaryColor,
+                  color: Platform.isIOS
+                      ? CupertinoTheme.of(context).primaryColor
+                      : Theme.of(context).primaryColor,
                 ),
               ),
             if (uploadChatItemView.taskSnapshotEvents != null)
