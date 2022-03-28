@@ -83,6 +83,9 @@ class FirebaseFlutterChatApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
+          textStyle: TextStyles.primaryTextStyle.copyWith(
+            fontSize: 14,
+          ),
           navTitleTextStyle: TextStyle(
             fontFamily: Fonts.fontFamily,
             color: ColorPalette.secondaryTextColor,
