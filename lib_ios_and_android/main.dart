@@ -33,32 +33,42 @@ class FirebaseFlutterChatApp extends StatelessWidget {
     return MaterialApp(
       title: Strings.appName,
       theme: ThemeData(
-          fontFamily: Fonts.fontFamily,
-          colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: ColorPalette.primaryColor,
-                secondary: ColorPalette.accentColor,
-                background: ColorPalette.primaryBackgroundColor,
-              ),
-          primaryColor: ColorPalette.primaryColor,
-          primaryColorDark: ColorPalette.darkPrimaryColor,
-          primaryColorLight: ColorPalette.lightPrimaryColor,
-          dialogTheme: DialogTheme(
-            backgroundColor: ColorPalette.primaryBackgroundColor,
-          ),
+        fontFamily: Fonts.fontFamily,
+        colorScheme: Theme.of(context).colorScheme.copyWith(
+              primary: ColorPalette.primaryColor,
+              secondary: ColorPalette.accentColor,
+              background: ColorPalette.primaryBackgroundColor,
+            ),
+        primaryColor: ColorPalette.primaryColor,
+        primaryColorDark: ColorPalette.darkPrimaryColor,
+        primaryColorLight: ColorPalette.lightPrimaryColor,
+        dialogTheme: DialogTheme(
           backgroundColor: ColorPalette.primaryBackgroundColor,
-          cardTheme: CardTheme(
-            color: ColorPalette.primaryBackgroundColor,
-            elevation: 10,
+        ),
+        backgroundColor: ColorPalette.primaryBackgroundColor,
+        cardTheme: CardTheme(
+          color: ColorPalette.primaryBackgroundColor,
+          elevation: 10,
+        ),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: ColorPalette.primaryColor,
+        ),
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: ColorPalette.primaryBackgroundColor,
+        ),
+        appBarTheme: AppBarTheme(
+          color: ColorPalette.darkPrimaryColor,
+          titleTextStyle: TextStyle(
+            fontFamily: Fonts.fontFamily,
+            color: ColorPalette.secondaryTextColor,
+            fontSize: 18,
           ),
-          progressIndicatorTheme: ProgressIndicatorThemeData(
-            color: ColorPalette.primaryColor,
-          ),
-          bottomSheetTheme: BottomSheetThemeData(
-            backgroundColor: ColorPalette.primaryBackgroundColor,
-          ),
-          appBarTheme: AppBarTheme(color: ColorPalette.darkPrimaryColor),
-          iconTheme: IconThemeData(color: ColorPalette.primaryIconColor),
-          scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor),
+        ),
+        iconTheme: IconThemeData(
+          color: ColorPalette.primaryIconColor,
+        ),
+        scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor,
+      ),
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: [
         const Locale('en'),
@@ -78,24 +88,15 @@ class FirebaseFlutterChatApp extends StatelessWidget {
         scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor,
         textTheme: CupertinoTextThemeData(
           primaryColor: ColorPalette.primaryTextColor,
-          navActionTextStyle: TextStyle(
-            fontFamily: Fonts.fontFamily,
-            color: ColorPalette.primaryTextColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-          ),
-          textStyle: TextStyles.primaryTextStyle.copyWith(
-            fontSize: 14,
-          ),
+          navActionTextStyle: TextStyles.primaryHeaderTextStyle,
           navTitleTextStyle: TextStyle(
             fontFamily: Fonts.fontFamily,
             color: ColorPalette.secondaryTextColor,
-            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
           ),
-          actionTextStyle: TextStyle(
-            fontFamily: Fonts.fontFamily,
-            color: ColorPalette.primaryTextColor,
-          ),
+          textStyle: TextStyles.primaryTextStyle.copyWith(fontSize: 14),
+          actionTextStyle: TextStyles.secondaryTextStyle,
         ),
       ),
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
