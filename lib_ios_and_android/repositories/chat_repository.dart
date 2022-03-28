@@ -147,6 +147,10 @@ class ChatRepository {
                         cloudChatItem.onCloud &&
                         !chatItemExists)) {
                   updateStream = true;
+                  if (cloudChatItem.isRecipient && !cloudChatItem.read) {
+                    //messages received will go into unread list.
+                    _unreadChatItemIds.add(id);
+                  }
                   if (chatItemExists) {
                     //ChatContentItem sent by user, read = true or onCloud = true
                     _chatItemMap[id] = cloudChatItem;
@@ -154,10 +158,6 @@ class ChatRepository {
                       createdAt: cloudChatItem.createdAt)) {
                     //if true add item at end of map
                     _chatItemMap[id] = cloudChatItem;
-                    if (cloudChatItem.isRecipient && cloudChatItem.read) {
-                      //messages received will go into unread list.
-                      _unreadChatItemIds.add(id);
-                    }
                   } else {
                     //add chat content item at start of map.
                     _insertChatItemAtStart(
