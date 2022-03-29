@@ -114,14 +114,9 @@ class _VideoPreviewWidgetState extends State<VideoPreviewWidget> {
             ),
             ConstrainedBox(
               constraints: BoxConstraints(maxHeight: 400),
-              child: _videoPlayerController.value.isInitialized
-                  ? AspectRatio(
+              child: AspectRatio(
                       aspectRatio: _videoPlayerController.value.aspectRatio,
                       child: VideoPlayer(_videoPlayerController),
-                    )
-                  : Center(
-                      //while video player is loading.
-                      child: CircularProgressIndicator.adaptive(),
                     ),
             ),
             if (_videoPlayerController.value.isInitialized) _buildSlider(),
