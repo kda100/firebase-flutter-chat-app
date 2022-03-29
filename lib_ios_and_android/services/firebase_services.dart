@@ -105,7 +105,12 @@ class FirebaseServices {
 
   ///changes read receipts to true for all unread messages in firestore.
   Future<void> updateReadReceipt({required String id}) async {
-    await _chatItemsCollection.doc(id).update({FieldNames.readField: true});
+    try {
+      // user may delete message before it is read.
+      await _chatItemsCollection.doc(id).update({FieldNames.readField: true});
+    } catch (e) {
+      return;
+    }
   }
 
   ///deletes message.
