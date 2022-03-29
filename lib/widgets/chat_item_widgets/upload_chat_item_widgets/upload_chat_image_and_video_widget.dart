@@ -27,64 +27,65 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
     if (uploadChatItemView.chatItemType == ChatItemType.VIDEO) {
       imagePath = uploadChatItemView.content[1]; //thumbnail file path.
     }
-    return ConstrainedBox(
-      constraints: BoxConstraints(
-        minHeight: kMinChatContentItemHeight,
-        maxWidth: kMaxChatContentItemWidth,
-        minWidth: kMaxChatContentItemWidth,
-      ),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: ColorPalette.secondaryBackgroundColor,
-        ),
-        child: Stack(
-          alignment: Alignment.centerRight,
-          children: [
-            Image.file(
-              File(imagePath),
-              errorBuilder: (context, exception, stackTrace) =>
-                  BrokenImagePlaceHolderWidget(),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: kMinChatContentItemHeight,
+            maxWidth: kMaxChatContentItemWidth,
+            minWidth: kMaxChatContentItemWidth,
+          ),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: ColorPalette.secondaryBackgroundColor,
             ),
-            if (uploadChatItemView.taskSnapshotEvents != null)
-              Positioned(
-                top: 0,
-                left: 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: PlatformIconButton(
-                    //button to cancel upload.
-                    onPressed: () => Provider.of<ChatProvider>(
-                      context,
-                      listen: false,
-                    ).cancelMediaUpload(id: uploadChatItemView.id),
-                    icon: Icon(
-                      Icons.cancel,
-                      color: Colors.red,
+            child: Stack(
+              alignment: Alignment.centerRight,
+              children: [
+                Image.file(
+                  File(imagePath),
+                  errorBuilder: (context, exception, stackTrace) =>
+                      BrokenImagePlaceHolderWidget(),
+                ),
+                if (uploadChatItemView.taskSnapshotEvents != null)
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: PlatformIconButton(
+                        //button to cancel upload.
+                        onPressed: () => Provider.of<ChatProvider>(
+                          context,
+                          listen: false,
+                        ).cancelMediaUpload(id: uploadChatItemView.id),
+                        icon: Icon(
+                          Icons.cancel,
+                          color: Colors.red,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            if (uploadChatItemView.chatItemType == ChatItemType.VIDEO)
-              Center(
-                child: Icon(
-                  Icons.play_arrow,
-                  size: 100,
-                  color: Platform.isIOS
-                      ? CupertinoTheme.of(context).primaryColor
-                      : Theme.of(context).primaryColor,
-                ),
-              ),
-            if (uploadChatItemView.taskSnapshotEvents != null)
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: CustomLinearProgress(
-                  taskSnapshotsEvents: uploadChatItemView.taskSnapshotEvents!,
-                ),
-              ),
-          ],
+                if (uploadChatItemView.chatItemType == ChatItemType.VIDEO)
+                  Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      size: 100,
+                      color: Platform.isIOS
+                          ? CupertinoTheme.of(context).primaryColor
+                          : Theme.of(context).primaryColor,
+                    ),
+                  ),
+              ],
+            ),
+          ),
         ),
-      ),
+        if (uploadChatItemView.taskSnapshotEvents != null)
+          CustomLinearProgress(
+            taskSnapshotsEvents: uploadChatItemView.taskSnapshotEvents!,
+          ),
+      ],
     );
   }
 }
