@@ -7,4 +7,4 @@ Please find in this respository the Dart code used for the Flutter UI and the Ty
 
 Recently added an additional lib folder "lib_ios_and_android" which contains the flutter code that can be used in both Android and IOS devices to give a more native feel for both devices.
 
-![android_sending_text_message](https://user-images.githubusercontent.com/65980399/160703606-f99bc6cd-6acd-43e9-8eef-75eb899e5ca5.gif)                     ![ios_sending_a_text_message](https://user-images.githubusercontent.com/65980399/160703421-1aca5770-31d8-4f54-a879-42e034b20062.gif)
+![ios_sending_a_text_message](https://user-images.githubusercontent.com/65980399/160703421-1aca5770-31d8-4f54-a879-42e034b20062.gif) ![android_sending_text_message](https://user-images.githubusercontent.com/65980399/160703606-f99bc6cd-6acd-43e9-8eef-75eb899e5ca5.gif)
