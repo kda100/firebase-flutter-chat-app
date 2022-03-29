@@ -6,3 +6,5 @@ Please find in this respository the Dart code used for the Flutter UI and the Ty
 
 
 Recently added an additional lib folder "lib_ios_and_android" which contains the flutter code that can be used in both Android and IOS devices to give a more native feel for both devices.
+
+![Uploading ios_sending_a_text_message.gif…]()
