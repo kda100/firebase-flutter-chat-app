@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:firebase_chat_app/constants/sizes.dart';
+import 'package:firebase_chat_app/constants/color_palette.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,9 +40,7 @@ class _CustomLinearProgressState extends State<CustomLinearProgress> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      color: Platform.isIOS
-          ? CupertinoTheme.of(context).primaryColor
-          : Theme.of(context).colorScheme.primary,
+      color: ColorPalette.primaryColor,
       duration: Duration(milliseconds: 100),
       height: 4,
       width: progress * kMaxChatContentItemWidth,
