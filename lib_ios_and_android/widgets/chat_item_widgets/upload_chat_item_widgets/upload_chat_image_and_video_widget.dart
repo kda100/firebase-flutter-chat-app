@@ -56,7 +56,7 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: PlatformIconButton(
-                        size: uiUtil.iconSize,
+                        materialSize: uiUtil.iconSize,
                         //button to cancel upload.
                         onPressed: () => Provider.of<ChatProvider>(
                           context,
