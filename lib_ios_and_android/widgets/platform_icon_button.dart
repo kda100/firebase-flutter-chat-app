@@ -7,12 +7,12 @@ class PlatformIconButton
     extends PlatformStatelessWidget<CupertinoButton, IconButton> {
   final Icon icon;
   final void Function() onPressed;
-  final double size;
+  final double materialSize;
 
   PlatformIconButton({
     required this.icon,
     required this.onPressed,
-    this.size = 25,
+    this.materialSize = 25,
   });
 
   @override
@@ -21,7 +21,6 @@ class PlatformIconButton
       child: icon,
       padding: EdgeInsets.zero,
       onPressed: onPressed,
-      minSize: size,
     );
   }
 
@@ -34,7 +33,7 @@ class PlatformIconButton
       constraints: BoxConstraints(),
       onPressed: onPressed,
       icon: icon,
-      iconSize: size,
+      iconSize: materialSize,
     );
   }
 }
