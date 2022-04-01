@@ -45,7 +45,7 @@ class FirebaseFlutterChatApp extends StatelessWidget {
                     fontFamily: Fonts.fontFamily,
                     color: ColorPalette.secondaryTextColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                    fontSize: 16,
                   ),
                   textStyle: TextStyle(
                     fontFamily: Fonts.fontFamily,
