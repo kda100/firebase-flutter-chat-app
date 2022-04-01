@@ -55,8 +55,9 @@ class _SendMessageWidgetState
       },
       icon: Icon(
         Platform.isIOS ? CupertinoIcons.arrow_up_circle_fill : Icons.send,
+        size: Platform.isIOS ? uiUtil.iconSize * 1.2 : null,
       ),
-      size: uiUtil.iconSize,
+      materialSize: uiUtil.iconSize,
     );
   }
 
@@ -64,8 +65,9 @@ class _SendMessageWidgetState
     return PlatformIconButton(
       icon: Icon(
         Platform.isIOS ? CupertinoIcons.plus : Icons.attach_file,
+        size: Platform.isIOS ? uiUtil.iconSize : null,
       ),
-      size: uiUtil.iconSize,
+      materialSize: uiUtil.iconSize,
       onPressed: () async {
         FocusScope.of(context).unfocus();
         chatProvider.updateReadReceipts();
