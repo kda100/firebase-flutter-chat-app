@@ -31,7 +31,7 @@ class PlatformIconButton
       constraints: BoxConstraints(),
       onPressed: onPressed,
       icon: icon,
-      iconSize: icon.size,
+      iconSize: icon.size ?? 24,
     );
   }
 }
