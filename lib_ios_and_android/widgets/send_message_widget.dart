@@ -12,7 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 ///Widget containing a text field and icon buttons for sending text messages, images and videos.
-
 class SendMessageWidget extends StatefulWidget {
   @override
   _SendMessageWidgetState createState() => _SendMessageWidgetState();
@@ -53,11 +52,15 @@ class _SendMessageWidgetState
           messageContent = '';
         }
       },
-      icon: Icon(
-        Platform.isIOS ? CupertinoIcons.arrow_up_circle_fill : Icons.send,
-        size: Platform.isIOS ? uiUtil.iconSize * 1.2 : null,
-      ),
-      materialSize: uiUtil.iconSize,
+      icon: Platform.isIOS
+          ? Icon(
+              CupertinoIcons.arrow_up_circle_fill,
+              size: uiUtil.iconSize * 1.2,
+            )
+          : Icon(
+              Icons.send,
+              size: uiUtil.iconSize,
+            ),
     );
   }
 
@@ -65,9 +68,8 @@ class _SendMessageWidgetState
     return PlatformIconButton(
       icon: Icon(
         Platform.isIOS ? CupertinoIcons.plus : Icons.attach_file,
-        size: Platform.isIOS ? uiUtil.iconSize : null,
+        size: uiUtil.iconSize,
       ),
-      materialSize: uiUtil.iconSize,
       onPressed: () async {
         FocusScope.of(context).unfocus();
         chatProvider.updateReadReceipts();
