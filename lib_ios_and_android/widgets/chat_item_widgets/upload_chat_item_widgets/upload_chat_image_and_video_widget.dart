@@ -56,7 +56,6 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: PlatformIconButton(
-                        materialSize: uiUtil.iconSize,
                         //button to cancel upload.
                         onPressed: () => Provider.of<ChatProvider>(
                           context,
@@ -65,6 +64,7 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
                         icon: Icon(
                           Icons.cancel,
                           color: Colors.red,
+                          size: uiUtil.iconSize,
                         ),
                       ),
                     ),
@@ -73,7 +73,7 @@ class UploadChatImageAndVideoWidget extends StatelessWidget {
                   Center(
                     child: Icon(
                       Icons.play_arrow,
-                      size: 100,
+                      size: uiUtil.iconSize * 4,
                       color: Platform.isIOS
                           ? CupertinoTheme.of(context).primaryColor
                           : Theme.of(context).primaryColor,
