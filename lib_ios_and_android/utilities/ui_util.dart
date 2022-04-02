@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-
-import '../constants/color_palette.dart';
-import '../constants/fonts.dart';
+///enum to depict different sizes of mobile devices
 
 enum PhoneScreenSize {
   Large,
   Medium,
   Small,
 }
+
+///UI utilities class containing information on ui element sizes depending on the screen size available.
+///larger screen sizes have bigger default sizes.
 
 class UIUtil {
   static UIUtil? _uiUtil;
@@ -19,7 +19,8 @@ class UIUtil {
 
   UIUtil._({required PhoneScreenSize phoneScreenSize})
       : _phoneScreenSize = phoneScreenSize;
-
+  
+/// UI Util is a singleton class.
   factory UIUtil(BuildContext context) {
     if (_uiUtil == null) {
       final double height = MediaQuery.of(context).size.height;
@@ -76,6 +77,7 @@ class UIUtil {
 
   double get maxChatItemHeight => _maxChatItemHeight;
 
+  ///text styles are part of ui utilities.
   TextStyle get textStyle1 => TextStyle(
         fontFamily: Fonts.fontFamily,
         color: ColorPalette.primaryTextColor,
