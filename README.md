@@ -5,7 +5,7 @@ This repository contains all the code for a one-to-one chat app developed using 
 Please find in this respository the Dart code used for the Flutter UI and the Typescript code used for Firebase Cloud Function triggers.
 
 
-Recently added an additional lib folder "lib_ios_and_android" which contains the flutter code that can be used in both Android and IOS devices to give a more native feel for both devices. This same folder also contains a singleton class "ui_util" to control UI elements sizing to different device sizes.
+Recently added an additional lib folder "lib_ios_and_android" which contains the flutter code that can be used in both Android and IOS devices to give a more native feel for both devices. This same folder also contains a singleton class "ui_util" to control UI elements and text based on different device sizes.
 
 <p align="center">
 <img src = "https://user-images.githubusercontent.com/65980399/160703421-1aca5770-31d8-4f54-a879-42e034b20062.gif"/> <img src = "https://user-images.githubusercontent.com/65980399/160703606-f99bc6cd-6acd-43e9-8eef-75eb899e5ca5.gif"/>
