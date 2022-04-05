@@ -24,7 +24,7 @@ class _ChatScreenState extends State<ChatScreen> with WidgetsBindingObserver {
   void initState() {
     chatProvider = Provider.of<ChatProvider>(context, listen: false);
     setUpChatData = chatProvider.setUpChatData();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
     super.initState();
   }
 
