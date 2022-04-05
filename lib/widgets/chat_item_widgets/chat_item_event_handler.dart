@@ -19,40 +19,38 @@ class ChatItemEventHandler extends StatelessWidget {
     final ChatProvider chatProvider =
         Provider.of<ChatProvider>(context, listen: false);
     return GestureDetector(
-        onLongPress: (cloudChatItemView
-                .isRecipient) //can not unsend message sent by recipient
-            ? null
-            : () async {
-                chatProvider
-                    .updateReadReceipts(); //updates read receipts of all messages not read
-                showDialog(
-                    context: context,
-                    builder: (context) =>
-                        ChangeNotifierProvider<ChatProvider>.value(
-                          value: chatProvider,
-                          child: ChatItemDialog(
-                            cloudChatItemView: cloudChatItemView,
-                          ),
-                        ));
-              },
-        onTap: (cloudChatItemView.chatItemType ==
-                ChatItemType.TEXT) //can not navigate a text message.
-            ? null
-            : () async {
-                chatProvider.updateReadReceipts();
-                var mediaURL;
-                if (cloudChatItemView.chatItemType == ChatItemType.IMAGE)
-                  mediaURL = cloudChatItemView.content; //image URL
-                else if (cloudChatItemView.chatItemType == ChatItemType.VIDEO)
-                  mediaURL = cloudChatItemView.content[0]; //video URL
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ChatMediaPreviewScreen(
-                        chatItemType: cloudChatItemView.chatItemType,
-                        mediaPath: mediaURL),
-                  ),
-                );
-              },
-        child: child);
+      onLongPress: (cloudChatItemView
+              .isRecipient) //can not unsend message sent by recipient
+          ? null
+          : () async {
+              chatProvider
+                  .updateReadReceipts(); //updates read receipts of all messages not read
+              showDialog(
+                context: context,
+                builder: (context) => ChatItemDialog(
+                  cloudChatItemView: cloudChatItemView,
+                ),
+              );
+            },
+      onTap: (cloudChatItemView.chatItemType ==
+              ChatItemType.TEXT) //can not navigate a text message.
+          ? null
+          : () async {
+              chatProvider.updateReadReceipts();
+              var mediaURL;
+              if (cloudChatItemView.chatItemType == ChatItemType.IMAGE)
+                mediaURL = cloudChatItemView.content; //image URL
+              else if (cloudChatItemView.chatItemType == ChatItemType.VIDEO)
+                mediaURL = cloudChatItemView.content[0]; //video URL
+              await Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChatMediaPreviewScreen(
+                      chatItemType: cloudChatItemView.chatItemType,
+                      mediaPath: mediaURL),
+                ),
+              );
+            },
+      child: child,
+    );
   }
 }
