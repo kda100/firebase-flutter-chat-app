@@ -8,6 +8,7 @@ import '../models/chat_video_item_folder.dart';
 
 ///class that contains references to firebase collections, docs and storage references.
 ///It contains useful functions that helpers the Chat Provider perform functions after user interaction.
+///firebase service is a singleton.
 class FirebaseServices {
   static final FirebaseServices _instance = FirebaseServices._();
 
@@ -16,15 +17,14 @@ class FirebaseServices {
   factory FirebaseServices() {
     return _instance;
   }
-  
+
   final CollectionReference _chatItemsCollection = FirebaseFirestore.instance
-      .collection(
-          "Chat items collections ref"); //Firebase Firestore col ref for all messages
+      .collection("chatItems"); //Firebase Firestore col ref for all messages
 
   ///function to get chat app (me) data from firestore.
   Future<User?> fetchMyData() async {
     final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.doc("My user doc").get();
+        await FirebaseFirestore.instance.doc("users/1234").get();
     if (userDoc.exists) {
       return User(id: userDoc.id, name: userDoc[FieldNames.nameField]);
     }
@@ -34,7 +34,7 @@ class FirebaseServices {
   ///function to get user (recipient) data from firestore.
   Future<User?> fetchRecipientData() async {
     final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.doc("Recipient user doc").get();
+        await FirebaseFirestore.instance.doc("users/4321").get();
     if (userDoc.exists) {
       return User(id: userDoc.id, name: userDoc[FieldNames.nameField]);
     }
@@ -87,9 +87,7 @@ class FirebaseServices {
 
   ///get image storage reference for new image message
   Reference getImageStorageRef({required String chatItemId}) {
-    return FirebaseStorage.instance
-        .ref("Your image storage ref")
-        .child(chatItemId);
+    return FirebaseStorage.instance.ref("images").child(chatItemId);
   }
 
   ///gets thumbnail and video storage reference for video message.
@@ -97,9 +95,8 @@ class FirebaseServices {
     required String chatItemId,
     required ChatVideoItemFolder chatVideoItemFolder,
   }) {
-    final Reference videoItemStorageRef = FirebaseStorage.instance
-        .ref("Your video storage ref")
-        .child(chatItemId);
+    final Reference videoItemStorageRef =
+        FirebaseStorage.instance.ref("videos").child(chatItemId);
     if (chatVideoItemFolder == ChatVideoItemFolder.VideoFile) {
       return videoItemStorageRef.child(
         "video",
@@ -114,7 +111,7 @@ class FirebaseServices {
   ///changes read receipts to true for all unread messages in firestore.
   Future<void> updateReadReceipt({required String id}) async {
     try {
-      // user may delete message before it is read.
+      //user may delete message before it is read.
       await _chatItemsCollection.doc(id).update({FieldNames.readField: true});
     } catch (e) {
       return;
