@@ -17,12 +17,10 @@ import '../models/user.dart';
 
 ///class that contains all the business logic needed for maintaining data of the chat app.
 ///It communicates with FirebaseServices to read and write data to be fed to the chat provider of the chat screen.
-
 ///This class listens to a Cloud Firestore collection containing messages then modifies a map containing
 ///chat content items that is sent into a stream to update the chat screen.
 ///By doing this the class is able to add images and videos being uploaded to the same map
 ///so users can see the upload progress of their videos and images being uploaded.
-
 class ChatRepository {
   final FirebaseServices _firebaseServices =
       FirebaseServices(); //class containing services to read and write to firebase
@@ -147,6 +145,10 @@ class ChatRepository {
                         cloudChatItem.onCloud &&
                         !chatItemExists)) {
                   updateStream = true;
+                  if (cloudChatItem.isRecipient && !cloudChatItem.read) {
+                    //messages received will go into unread list.
+                    _unreadChatItemIds.add(id);
+                  }
                   if (chatItemExists) {
                     //ChatContentItem sent by user, read = true or onCloud = true
                     _chatItemMap[id] = cloudChatItem;
@@ -154,10 +156,6 @@ class ChatRepository {
                       createdAt: cloudChatItem.createdAt)) {
                     //if true add item at end of map
                     _chatItemMap[id] = cloudChatItem;
-                    if (cloudChatItem.isRecipient && cloudChatItem.read) {
-                      //messages received will go into unread list.
-                      _unreadChatItemIds.add(id);
-                    }
                   } else {
                     //add chat content item at start of map.
                     _insertChatItemAtStart(
@@ -297,10 +295,11 @@ class ChatRepository {
         _firebaseServices.getImageStorageRef(chatItemId: chatItemId);
     //for image only upload image file.
     final String? chatImageDownloadURL = await _uploadMedia(
-        media: File(imagePath),
-        id: chatItemId,
-        uploadChatItem: uploadChatItem,
-        mediaStorageRef: imageStorageRef);
+      media: File(imagePath),
+      id: chatItemId,
+      uploadChatItem: uploadChatItem,
+      mediaStorageRef: imageStorageRef,
+    );
     if (chatImageDownloadURL != null) {
       //set image downloadURL to Firestore
       _firebaseServices.setChatItem(
@@ -335,7 +334,7 @@ class ChatRepository {
         mediaStorageRef: videoStorageRef,
       );
       if (chatVideoDownloadURL != null) {
-        final videoStorageRef = _firebaseServices.getVideoStorageRef(
+        final thumbnailStorageRef = _firebaseServices.getVideoStorageRef(
           chatItemId: chatItemId,
           chatVideoItemFolder: ChatVideoItemFolder.ThumbnailFile,
         );
@@ -343,7 +342,7 @@ class ChatRepository {
           media: File(thumbnail.path),
           id: chatItemId,
           uploadChatItem: uploadChatItem,
-          mediaStorageRef: videoStorageRef,
+          mediaStorageRef: thumbnailStorageRef,
         );
         if (chatThumbnailDownloadURL != null) {
           //set video and thumbnail downloadURLs to Firestore
