@@ -4,10 +4,20 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 ///Service used to perform requests to mobile devices file system.
-
+///file services is a singleton.
 class FileServices {
-  static const int maxMediaSizeMegaBytes =
+  static final FileServices _instance = FileServices._();
+
+  FileServices._();
+
+  factory FileServices() {
+    return _instance;
+  }
+
+  static const int _maxMediaSizeMegaBytes =
       200; // max size of media messages (file and images)
+
+  static int get maxMediaSizeMegaBytes => _maxMediaSizeMegaBytes;
 
   ///function used to get file path of chat content item user would like to get.
   Future<String?> getFilePath({required FileType fileType}) async {
