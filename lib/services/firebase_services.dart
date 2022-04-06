@@ -9,6 +9,14 @@ import '../models/chat_video_item_folder.dart';
 ///class that contains references to firebase collections, docs and storage references.
 ///It contains useful functions that helpers the Chat Provider perform functions after user interaction.
 class FirebaseServices {
+  static final FirebaseServices _instance = FirebaseServices._();
+
+  FirebaseServices._();
+
+  factory FirebaseServices() {
+    return _instance;
+  }
+  
   final CollectionReference _chatItemsCollection = FirebaseFirestore.instance
       .collection(
           "Chat items collections ref"); //Firebase Firestore col ref for all messages
