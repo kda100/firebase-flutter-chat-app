@@ -117,6 +117,7 @@ class _SendMessageWidgetState
             ),
           ),
           color: CupertinoColors.systemGrey6),
+      constraints: BoxConstraints(maxHeight: 100),
       child: SafeArea(
         child: CupertinoTextField(
           onTap: () {
@@ -162,6 +163,7 @@ class _SendMessageWidgetState
                 color: Colors.grey.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(25),
               ),
+              constraints: BoxConstraints(maxHeight: 100),
               child: Row(
                 children: [
                   Expanded(
