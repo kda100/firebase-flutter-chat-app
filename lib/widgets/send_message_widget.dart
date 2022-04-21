@@ -28,14 +28,14 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
     final ChatProvider chatProvider =
         Provider.of<ChatProvider>(context, listen: false);
 
-    return SafeArea(
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.all(4.0),
         child: Row(
           children: [
             Expanded(
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
+                constraints: BoxConstraints(maxHeight: 100),
                 decoration: BoxDecoration(
                   color: Colors.grey.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(25),
@@ -130,7 +130,6 @@ class _SendMessageWidgetState extends State<SendMessageWidget> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }
