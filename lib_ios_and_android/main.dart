@@ -1,16 +1,20 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:firebase_chat_app/providers/chat_provider.dart';
-import 'package:firebase_chat_app/screens/chat_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
+import 'package:body_weight_tracker/providers/body_weight_tracker_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/material.dart';
-import 'constants/color_palette.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'body_weight_tracker_screen/body_weight_tracker_screen.dart';
 import 'constants/fonts.dart';
+import 'constants/strings.dart';
+import 'constants/color_palette.dart';
+import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+
+import 'constants/text_styles.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,97 +22,100 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(
-    FirebaseFlutterChatApp(),
+    BodyWeightTrackerApp(),
   );
 }
 
-class FirebaseFlutterChatApp extends StatelessWidget {
+class BodyWeightTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismissOnTap(
       //Keyboard dismisses on tap anywhere in app.
-      child: ChangeNotifierProvider<ChatProvider>(
-        create: (_) => ChatProvider(),
-        child: Platform.isIOS
-            ? CupertinoApp(
-                home: ChatScreen(),
-                theme: CupertinoThemeData(
+      child: ScreenUtilInit(
+        designSize: Size(
+          360,
+          752,
+        ),
+        builder: () => ChangeNotifierProvider<BodyWeightTrackerProvider>(
+          create: (context) => BodyWeightTrackerProvider(),
+          child: PlatformApp(
+            cupertino: (_, __) => CupertinoAppData(
+              theme: CupertinoThemeData(
+                primaryColor: ColorPalette.primaryColor,
+                primaryContrastingColor: Colors.black,
+                barBackgroundColor: ColorPalette.darkPrimaryColor,
+                scaffoldBackgroundColor: ColorPalette.backGroundColor,
+                textTheme: CupertinoTextThemeData(
+                  navActionTextStyle: TextStyles.customHeading,
+                  textStyle: TextStyles.customBodyText,
+                  navTitleTextStyle: TextStyle(
+                    fontFamily: Fonts.fontFamily,
+                    color: ColorPalette.secondaryTextColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
                   primaryColor: ColorPalette.primaryColor,
-                  barBackgroundColor: ColorPalette.darkPrimaryColor,
-                  scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor,
-                  textTheme: CupertinoTextThemeData(
-                    primaryColor: ColorPalette.primaryTextColor,
-                    navTitleTextStyle: TextStyle(
-                      fontFamily: Fonts.fontFamily,
-                      color: ColorPalette.secondaryTextColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                    textStyle: TextStyle(
-                        fontFamily: Fonts.fontFamily,
-                        color: ColorPalette.primaryTextColor,
-                        fontSize: 15),
-                    actionTextStyle: TextStyle(
-                        fontFamily: Fonts.fontFamily,
-                        color: ColorPalette.primaryColor,
-                        fontSize: 17),
-                  ),
+                  actionTextStyle: TextStyles.customTextButtonStyle,
+                  dateTimePickerTextStyle: TextStyles.customBodyText,
                 ),
-                localizationsDelegates: GlobalMaterialLocalizations.delegates,
-                supportedLocales: [
-                  const Locale('en'),
-                ],
-              )
-            : MaterialApp(
-                home: ChatScreen(),
-                theme: ThemeData(
-                  fontFamily: Fonts.fontFamily,
-                  colorScheme: Theme.of(context).colorScheme.copyWith(
-                        primary: ColorPalette.primaryColor,
-                        secondary: ColorPalette.accentColor,
-                        background: ColorPalette.primaryBackgroundColor,
-                      ),
-                  primaryColor: ColorPalette.primaryColor,
-                  primaryColorDark: ColorPalette.darkPrimaryColor,
-                  primaryColorLight: ColorPalette.lightPrimaryColor,
-                  dialogTheme: DialogTheme(
-                    backgroundColor: ColorPalette.primaryBackgroundColor,
-                  ),
-                  backgroundColor: ColorPalette.primaryBackgroundColor,
-                  cardTheme: CardTheme(
-                    color: ColorPalette.primaryBackgroundColor,
-                    elevation: 10,
-                  ),
-                  progressIndicatorTheme: ProgressIndicatorThemeData(
-                    color: ColorPalette.primaryColor,
-                  ),
-                  bottomSheetTheme: BottomSheetThemeData(
-                    backgroundColor: ColorPalette.primaryBackgroundColor,
-                  ),
-                  appBarTheme: AppBarTheme(
-                    color: ColorPalette.darkPrimaryColor,
-                    titleTextStyle: TextStyle(
-                      fontSize: 20,
-                      fontFamily: Fonts.fontFamily,
-                    ),
-                  ),
-                  iconTheme: IconThemeData(
-                    color: ColorPalette.primaryIconColor,
-                  ),
-                  textTheme: TextTheme(
-                    bodyText2: TextStyle(
-                      fontFamily: Fonts.fontFamily,
-                      color: ColorPalette.primaryTextColor,
-                      fontSize: 14,
-                    ),
-                  ),
-                  scaffoldBackgroundColor: ColorPalette.primaryBackgroundColor,
-                ),
-                localizationsDelegates: GlobalMaterialLocalizations.delegates,
-                supportedLocales: [
-                  const Locale('en'),
-                ],
               ),
+            ),
+            material: (_, __) => MaterialAppData(
+              theme: ThemeData(
+                colorScheme: Theme.of(context).colorScheme.copyWith(
+                      primary: ColorPalette.primaryColor,
+                      secondary: ColorPalette.accentColor,
+                      background: ColorPalette.backGroundColor,
+                    ),
+                popupMenuTheme: PopupMenuThemeData(
+                  color: ColorPalette.backGroundColor,
+                  elevation: 5,
+                  textStyle: TextStyles.customBodyText,
+                ),
+                textTheme: TextTheme(
+                  bodyText2: TextStyles.customBodyText,
+                ),
+                primaryColor: ColorPalette.primaryColor,
+                primaryColorDark: ColorPalette.darkPrimaryColor,
+                primaryColorLight: ColorPalette.lightPrimaryColor,
+                dividerColor: ColorPalette.borderColor,
+                dialogTheme: DialogTheme(
+                  backgroundColor: ColorPalette.backGroundColor,
+                ),
+                backgroundColor: ColorPalette.backGroundColor,
+                cardTheme: CardTheme(
+                  color: ColorPalette.backGroundColor,
+                  elevation: 10,
+                ),
+                progressIndicatorTheme: ProgressIndicatorThemeData(
+                  color: ColorPalette.primaryColor,
+                ),
+                appBarTheme: AppBarTheme(
+                  color: ColorPalette.darkPrimaryColor,
+                  titleTextStyle: TextStyle(
+                    fontSize: 20,
+                    fontFamily: Fonts.fontFamily,
+                  ),
+                ),
+                floatingActionButtonTheme: FloatingActionButtonThemeData(
+                    backgroundColor: ColorPalette.darkPrimaryColor),
+                fontFamily: Fonts.fontFamily,
+                scaffoldBackgroundColor: ColorPalette.backGroundColor,
+              ),
+            ),
+            title: Strings.bodyWeightTrackerTitle,
+            builder: (context, widget) {
+              //add this line
+              ScreenUtil.setContext(context);
+              return widget!;
+            },
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            supportedLocales: [
+              const Locale('en'),
+            ],
+            home: BodyWeightTrackerScreen(),
+          ),
+        ),
       ),
     );
   }
