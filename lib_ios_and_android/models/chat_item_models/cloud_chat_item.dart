@@ -1,4 +1,4 @@
-import 'package:firebase_chat_app/constants/firebase_field_names.dart';
+import '../../constants/firebase.dart';
 import '../chat_item_type.dart';
 import 'chat_item.dart';
 
