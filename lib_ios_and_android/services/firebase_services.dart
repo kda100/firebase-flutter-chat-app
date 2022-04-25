@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat_app/models/chat_item_type.dart';
 import 'package:firebase_chat_app/models/user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../constants/firebase_field_names.dart';
+import '../constants/firebase.dart';
 import '../models/chat_video_item_folder.dart';
 
 ///class that contains references to firebase collections, docs and storage references.
@@ -20,12 +20,13 @@ class FirebaseServices {
   }
 
   final CollectionReference _chatItemsCollection = FirebaseFirestore.instance
-      .collection("chatItems"); //Firebase Firestore col ref for all messages
+      .collection(
+          chatItemColRefPath); //Firebase Firestore col ref for all messages
 
   ///function to get chat app (me) data from firestore.
   Future<User?> fetchMyData() async {
     final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.doc("users/1234").get();
+        await FirebaseFirestore.instance.doc(userDocRefPath).get();
     if (userDoc.exists) {
       return User(id: userDoc.id, name: userDoc[FieldNames.nameField]);
     }
@@ -35,7 +36,7 @@ class FirebaseServices {
   ///function to get user (recipient) data from firestore.
   Future<User?> fetchRecipientData() async {
     final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.doc("users/4321").get();
+        await FirebaseFirestore.instance.doc(recipientDocRefPath).get();
     if (userDoc.exists) {
       return User(id: userDoc.id, name: userDoc[FieldNames.nameField]);
     }
@@ -88,7 +89,7 @@ class FirebaseServices {
 
   ///get image storage reference for new image message
   Reference getImageStorageRef({required String chatItemId}) {
-    return FirebaseStorage.instance.ref("images").child(chatItemId);
+    return FirebaseStorage.instance.ref(imagesStorageRefPath).child(chatItemId);
   }
 
   ///gets thumbnail and video storage reference for video message.
@@ -97,14 +98,14 @@ class FirebaseServices {
     required ChatVideoItemFolder chatVideoItemFolder,
   }) {
     final Reference videoItemStorageRef =
-        FirebaseStorage.instance.ref("videos").child(chatItemId);
+        FirebaseStorage.instance.ref(videosStorageRefPath).child(chatItemId);
     if (chatVideoItemFolder == ChatVideoItemFolder.VideoFile) {
       return videoItemStorageRef.child(
-        "video",
+        videoFileStoragePath,
       );
     } else {
       return videoItemStorageRef.child(
-        "thumbnail",
+        thumbnailStoragePath,
       );
     }
   }
