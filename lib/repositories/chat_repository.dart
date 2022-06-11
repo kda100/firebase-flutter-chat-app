@@ -17,10 +17,12 @@ import '../models/user.dart';
 
 ///class that contains all the business logic needed for maintaining data of the chat app.
 ///It communicates with FirebaseServices to read and write data to be fed to the chat provider of the chat screen.
+
 ///This class listens to a Cloud Firestore collection containing messages then modifies a map containing
 ///chat content items that is sent into a stream to update the chat screen.
 ///By doing this the class is able to add images and videos being uploaded to the same map
 ///so users can see the upload progress of their videos and images being uploaded.
+
 class ChatRepository {
   final FirebaseServices _firebaseServices =
       FirebaseServices(); //class containing services to read and write to firebase
@@ -30,6 +32,7 @@ class ChatRepository {
 
   Map<String, ChatItem> _chatItemMap =
       {}; //map where all chat content items (messages) are stored, these are displayed on chat screen, keys are the firebase id references.
+  List<String> _chatItemKeys = [];
   Queue<String> _uploadChatItemsIdsQueue =
       Queue(); //control image and videos being upload so only one at time.
   List<String> _unreadChatItemIds =
@@ -46,6 +49,8 @@ class ChatRepository {
   String get recipientName => _recipient!.name;
 
   Map<String, ChatItem> get chatItemMap => _chatItemMap;
+
+  List<String> get chatItemKeys => _chatItemKeys;
 
   ///this function removes cached files once they have been uploaded to storage.
   Future<void> _deleteChatItemCache({required String id}) async {
@@ -172,7 +177,8 @@ class ChatRepository {
           },
         );
         if (updateStream) //not every instance of new doc is chat screen updated.
-          chatResponseStreamController.sink.add(ChatResponse.update());
+          _chatItemKeys = _chatItemMap.keys.toList();
+        chatResponseStreamController.sink.add(ChatResponse.update());
       },
     );
     chatResponseStreamController.sink
@@ -279,6 +285,7 @@ class ChatRepository {
       chatItemType: chatItemType,
     );
     _chatItemMap[chatItemId] = uploadChatItem;
+    _chatItemKeys = _chatItemMap.keys.toList();
     _uploadChatItemsIdsQueue.add(chatItemId);
     return uploadChatItem;
   }
