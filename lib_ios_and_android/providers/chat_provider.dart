@@ -108,9 +108,10 @@ class ChatProvider with ChangeNotifier {
   ///each ChatContentItem data and determined their ChatContentItemView data, then returns this info back to the view.
   ChatItemView getChatItemView({required int index}) {
     final Map<String, ChatItem> chatItemMap = _chatRepository.chatItemMap;
+    final List<String> chatItemKeys = _chatRepository.chatItemKeys;
 
     index = chatItemMap.length - index - 1;
-    final String currentId = (chatItemMap.keys.elementAt(index));
+    final String currentId = chatItemKeys[index];
     ChatItem currChatItem = chatItemMap[currentId]!;
     bool showDateHeading;
     bool showChatItemName;
@@ -118,8 +119,7 @@ class ChatProvider with ChangeNotifier {
       showDateHeading = true;
       showChatItemName = true;
     } else {
-      ChatItem prevChatItem =
-          chatItemMap[chatItemMap.keys.elementAt(index - 1)]!;
+      ChatItem prevChatItem = chatItemMap[chatItemKeys[index - 1]]!;
       final DateTime currCreatedAtDDMMYY =
           DateTimeHelper.formatDateTimeToYearMonthDay(currChatItem.createdAt);
       final DateTime prevCreatedAtDDMMYY =
