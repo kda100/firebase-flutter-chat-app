@@ -32,6 +32,7 @@ class ChatRepository {
 
   Map<String, ChatItem> _chatItemMap =
       {}; //map where all chat content items (messages) are stored, these are displayed on chat screen, keys are the firebase id references.
+  List<String> _chatItemKeys = [];
   Queue<String> _uploadChatItemsIdsQueue =
       Queue(); //control image and videos being upload so only one at time.
   List<String> _unreadChatItemIds =
@@ -48,6 +49,8 @@ class ChatRepository {
   String get recipientName => _recipient!.name;
 
   Map<String, ChatItem> get chatItemMap => _chatItemMap;
+
+  List<String> get chatItemKeys => _chatItemKeys;
 
   ///this function removes cached files once they have been uploaded to storage.
   Future<void> _deleteChatItemCache({required String id}) async {
@@ -174,7 +177,8 @@ class ChatRepository {
           },
         );
         if (updateStream) //not every instance of new doc is chat screen updated.
-          chatResponseStreamController.sink.add(ChatResponse.update());
+          _chatItemKeys = _chatItemMap.keys.toList();
+        chatResponseStreamController.sink.add(ChatResponse.update());
       },
     );
     chatResponseStreamController.sink
@@ -281,6 +285,7 @@ class ChatRepository {
       chatItemType: chatItemType,
     );
     _chatItemMap[chatItemId] = uploadChatItem;
+    _chatItemKeys = _chatItemMap.keys.toList();
     _uploadChatItemsIdsQueue.add(chatItemId);
     return uploadChatItem;
   }
